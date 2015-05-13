@@ -39,6 +39,7 @@ Resource.prototype.update = function(id, data) {
 }
 
 Resource.prototype.delete = function(id) {
+	console.log(this);
 	return Q($.ajax({
 	    url: this.url+"/"+id, // api endpoint
 	    method: "delete",

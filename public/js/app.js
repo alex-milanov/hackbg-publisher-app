@@ -17,6 +17,7 @@ var PublisherApp = function(){
 		return helpers.displayWithJade(container, tplName, data);
 	}
 
+
 	var listMags = function(){
 		return magRes.query().then(function(res){
 			return displayCollection(res, "mags")
@@ -35,20 +36,31 @@ var PublisherApp = function(){
 		})
 	}
 
+/*
+	var callActionOnRes = function(res, action){
+		return function(){
+			// get arguments
+
+			// call method/action
+			res[action](args);
+		}
+	}
+*/
+
+	var createMag = function(data){
+		return magRes.create(data);
+	}
+
+	var deleteMag = function(id){
+		return magRes.delete(id);
+	}
+
 	return {
 		listMags: listMags,
 		listSubs: listSubs,
 		listUsers: listUsers,
-		createMag: magRes.create,
-		createSub: subRes.create,
-		createUser: userRes.create,
-		updateMag: magRes.update,
-		updateSub: subRes.update,
-		updateUser: userRes.update,
-		deleteMag: magRes.delete,
-		deleteSub: subRes.delete,
-		deleteUser: userRes.delete
+		createMag: createMag,
+		deleteMag: deleteMag
 	}
-
 
 }()

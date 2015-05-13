@@ -16,7 +16,7 @@ h4 Magazines
 			button.btn.btn-default Reset
 
 	.col-sm-8
-		table.table
+		table.table#mags-table
 			thead: tr
 				th Name
 				th Vol
@@ -31,4 +31,4 @@ h4 Magazines
 						td
 							a.btn.btn-primary edit
 							| &nbsp; 
-							a.btn.btn-danger.action-delete(data-id=mag.id) delete
+							a.btn.btn-danger.action-delete(data-id=mag._id) delete
