@@ -1,24 +1,5 @@
 $(document).ready(function(){
 
-	function displayWithJade(container, fileName, data){
-		return Q($.get(fileName)).then(function(jadeString){
-			var renderedHtml = jade.render(jadeString, data);
-			container.html(renderedHtml);
-		})
-	}
-
-	function getDataFromForm(form){
-
-		var formArray = form.serializeArray();
-
-		var data = {};
-
-		formArray.forEach(function(field){
-			data[field.name] = field.value;
-		})
-		return data;
-	}
-
 	// resources
 	var mag = new Resource("/api/mags");
 	var sub = new Resource("/api/subs");
@@ -29,14 +10,13 @@ $(document).ready(function(){
 		var container = $("#mags");
 		var mags = res.list;
 
-		return displayWithJade(container, "/views/mags.jade", {
+		return helpers.displayWithJade(container, "/views/mags.jade", {
 			mags: mags
 		});
 
 	}).then(function(){
 		$("#mags-form").on("submit", function(event){
-
-			var data = getDataFromForm($(this));
+			var data = helpers.getDataFromForm($(this));
 
 			mag.create(data).then(function(){
 				console.log("Created Successfuly!")
@@ -46,13 +26,12 @@ $(document).ready(function(){
 		})
 	
 	})
-
 	
 	sub.query().then(function(res){
 		var container = $("#subs");
 		var subs = res.list;
 
-		displayWithJade(container, "/views/subs.jade", {
+		helpers.displayWithJade(container, "/views/subs.jade", {
 			subs: subs
 		});
 	})
@@ -61,7 +40,7 @@ $(document).ready(function(){
 		var container = $("#users");
 		var users = res.list;
 
-		displayWithJade(container, "/views/users.jade", {
+		helpers.displayWithJade(container, "/views/users.jade", {
 			users: users
 		});
 	})
