@@ -6,7 +6,7 @@ var MagsCtrl = (function(){
 
 	var list = function(){
 		return magRes.query().then(function(result){
-			var container = $("#mags");
+			var container = $("#content");
 			var tplName = "views/mags.jade"
 			var data = {
 				mags: result.list
@@ -57,7 +57,7 @@ var MagsCtrl = (function(){
 	}
 
 	var remove = function(id){
-		PublisherApp.deleteMag(id).then(function(){
+		magRes.delete(id).then(function(){
 			console.log("Deleted "+id+" successfuly!");
 			list();
 		})
@@ -65,27 +65,27 @@ var MagsCtrl = (function(){
 
 	var init = function(){
 
-		$("#mags").on("submit", "#mags-form",function(event){
+		$("#content").on("submit", "#mags-form",function(event){
 			var data = helpers.getDataFromForm($(this));
 			save(data);
 			event.preventDefault();
 		})
 
-		$("#mags").on("click", ".action-reset",function(event){
+		$("#content").on("click", ".action-reset",function(event){
 			reset();
 		})
 
-		$("#mags").on("click", ".action-delete", function(){
+		$("#content").on("click", ".action-delete", function(){
 			var id = $(this).data("id");
 			remove(id);
 		})
 
-		$("#mags").on("click", ".action-edit", function(){
+		$("#content").on("click", ".action-edit", function(){
 			var id = $(this).data("id");
 			edit(id);
 		})
 
-		list();
+		return list();
 
 	}
 
@@ -98,4 +98,4 @@ var MagsCtrl = (function(){
 		init: init
 	};
 
-})();
+}());

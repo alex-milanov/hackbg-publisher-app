@@ -1,66 +1,43 @@
 
 
-var PublisherApp = function(){
+var app = function(){
 
-	var magRes = new Resource("/api/mags");
-	var subRes = new Resource("/api/subs");
-	var userRes = new Resource("/api/users");
+	var ctrls = {};
 
-	var displayCollection = function(result, collectionName){
-		var container = $("#"+collectionName);
+	var router = Router();
 
-		var data = {};
-		data[collectionName] = result.list;
+	var routes = [{
+		url: "/mags",
+		default: true,
+		ctrl: "MagsCtrl"
+	},{
+		url: "/subs",
+		ctrl: "SubsCtrl"
+	},{
+		url: "/users",
+		ctrl: "UsersCtrl"
+	}]
 
-		var tplName = "/views/"+collectionName+".jade";
+	var init = function(){
 
-		return helpers.displayWithJade(container, tplName, data);
-	}
-
-
-	var listMags = function(){
-		return magRes.query().then(function(res){
-			return displayCollection(res, "mags")
+		routes.forEach(function(route){
+			if(typeof route.ctrl === "string" && ctrls[route.ctrl]){
+				route.callback = ctrls[route.ctrl].init
+			}
+			router.addRoute(route); 
 		})
+
+		router.init();
+
 	}
 
-	var listSubs = function(){
-		return subRes.query().then(function(res){
-			return displayCollection(res, "subs")
-		})
-	}
-
-	var listUsers = function(){
-		return userRes.query().then(function(res){
-			return displayCollection(res, "users")
-		})
-	}
-
-/*
-	var callActionOnRes = function(res, action){
-		return function(){
-			// get arguments
-
-			// call method/action
-			res[action](args);
-		}
-	}
-*/
-
-	var createMag = function(data){
-		return magRes.create(data);
-	}
-
-	var deleteMag = function(id){
-		return magRes.delete(id);
+	var addCtrl = function(name, ctrl){
+		ctrls[name] = ctrl;
 	}
 
 	return {
-		listMags: listMags,
-		listSubs: listSubs,
-		listUsers: listUsers,
-		createMag: createMag,
-		deleteMag: deleteMag
+		init: init,
+		addCtrl: addCtrl
 	}
 
 }()

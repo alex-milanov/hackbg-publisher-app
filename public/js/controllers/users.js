@@ -6,7 +6,7 @@ var UsersCtrl = (function(){
 
 	var list = function(){
 		return useRres.query().then(function(result){
-			var container = $("#users");
+			var container = $("#content");
 			var tplName = "views/users.jade"
 			var data = {
 				users: result.list
@@ -57,7 +57,7 @@ var UsersCtrl = (function(){
 	}
 
 	var remove = function(id){
-		PublisherApp.deleteMag(id).then(function(){
+		userRes.delete(id).then(function(){
 			console.log("Deleted "+id+" successfuly!");
 			list();
 		})
@@ -65,22 +65,22 @@ var UsersCtrl = (function(){
 
 	var init = function(){
 
-		$("#users").on("submit", "#users-form",function(event){
+		$("#content").on("submit", "#users-form",function(event){
 			var data = helpers.getDataFromForm($(this));
 			save(data);
 			event.preventDefault();
 		})
 
-		$("#users").on("click", ".action-reset",function(event){
+		$("#content").on("click", ".action-reset",function(event){
 			reset();
 		})
 
-		$("#users").on("click", ".action-delete", function(){
+		$("#content").on("click", ".action-delete", function(){
 			var id = $(this).data("id");
 			remove(id);
 		})
 
-		$("#users").on("click", ".action-edit", function(){
+		$("#content").on("click", ".action-edit", function(){
 			var id = $(this).data("id");
 			edit(id);
 		})

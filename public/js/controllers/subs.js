@@ -6,7 +6,7 @@ var SubsCtrl = (function(){
 
 	var list = function(){
 		return subRes.query().then(function(result){
-			var container = $("#subs");
+			var container = $("#content");
 			var tplName = "views/subs.jade"
 			var data = {
 				subs: result.list
@@ -57,7 +57,7 @@ var SubsCtrl = (function(){
 	}
 
 	var remove = function(id){
-		PublisherApp.deleteMag(id).then(function(){
+		subRes.delete(id).then(function(){
 			console.log("Deleted "+id+" successfuly!");
 			list();
 		})
@@ -65,22 +65,22 @@ var SubsCtrl = (function(){
 
 	var init = function(){
 
-		$("#subs").on("submit", "#subs-form",function(event){
+		$("#content").on("submit", "#subs-form",function(event){
 			var data = helpers.getDataFromForm($(this));
 			save(data);
 			event.preventDefault();
 		})
 
-		$("#subs").on("click", ".action-reset",function(event){
+		$("#content").on("click", ".action-reset",function(event){
 			reset();
 		})
 
-		$("#subs").on("click", ".action-delete", function(){
+		$("#content").on("click", ".action-delete", function(){
 			var id = $(this).data("id");
 			remove(id);
 		})
 
-		$("#subs").on("click", ".action-edit", function(){
+		$("#content").on("click", ".action-edit", function(){
 			var id = $(this).data("id");
 			edit(id);
 		})
