@@ -12,8 +12,9 @@ h4 Magazines
 			.form-group
 				label Price
 				input.form-control(name="price",type="number")
+			input(type="hidden",name="_id",value="")
 			button.btn.btn-primary(type="submit") Save
-			button.btn.btn-default Reset
+			button.btn.btn-default.action-reset(type="button") Reset
 
 	.col-sm-8
 		table.table#mags-table
@@ -29,6 +30,6 @@ h4 Magazines
 						td= mag.vol
 						td= mag.price
 						td
-							a.btn.btn-primary edit
+							a.btn.btn-primary.action-edit(data-id=mag._id) edit
 							| &nbsp; 
 							a.btn.btn-danger.action-delete(data-id=mag._id) delete

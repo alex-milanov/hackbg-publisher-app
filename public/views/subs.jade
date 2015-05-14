@@ -12,8 +12,9 @@ h4 Subscriptions
 			.form-group
 				label Months
 				input.form-control(name="months",type="number")
+			input(type="hidden",name="_id",value="")
 			button.btn.btn-primary(type="submit") Save
-			button.btn.btn-default Reset
+			button.btn.btn-default.action-reset(type="button") Reset
 
 	.col-sm-8
 		table.table
@@ -21,9 +22,14 @@ h4 Subscriptions
 				th Mag
 				th User
 				th Months
+				th Actions
 			tbody
 				each sub in subs
 					tr
 						td= sub.magId
 						td= sub.userId
 						td= sub.months
+						td
+							a.btn.btn-primary.action-edit(data-id=sub._id) edit
+							| &nbsp;
+							a.btn.btn-danger.action-delete(data-id=sub._id) delete

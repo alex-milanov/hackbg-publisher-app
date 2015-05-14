@@ -4,21 +4,27 @@ h4 Users
 	.col-sm-4
 		form.well#users-form
 			.form-group
-				label Magazine
+				label Name
 				input.form-control(name="name",type="text")
 			.form-group
-				label User
+				label Email
 				input.form-control(name="email",type="text")
+			input(type="hidden",name="_id",value="")
 			button.btn.btn-primary(type="submit") Save
-			button.btn.btn-default Reset
+			button.btn.btn-default.action-reset(type="button") Reset
 
 	.col-sm-8
 		table.table
 			thead: tr
 				th Name
 				th Email
+				th Actions
 			tbody
 				each user in users
 					tr
 						td= user.name
 						td= user.email
+						td
+							a.btn.btn-primary.action-edit(data-id=user._id) edit
+							| &nbsp; 
+							a.btn.btn-danger.action-delete(data-id=user._id) delete
